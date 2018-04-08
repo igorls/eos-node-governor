@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title 2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.0/socket.io.js"
+            integrity="sha256-Thm9kMI2BQKxVnCWipQIGeb8QVl2lohO+WWWfCiF8b0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(()=>{
+            const container = $('#container');
+            const serverurl = 'http://' + window.location.hostname + ":" + window.location.port;
+            const socket = io(serverurl);
+            $('body').prepend($('<h2>Realtime logs for '+ window.location.hostname +'</h2>'));
+            const enc = new TextDecoder("utf-8");
+            socket.emit('join', {room: 'logs'});
+            socket.on('log', function (data) {
+                const txt = enc.decode(data);
+                const now = new Date().toISOString();
+                const newItem = $('<div>' + now + " - " + txt + '</div>');
+                container.append(newItem);
+            });
+        });
+    </script>
+    <style type="text/css">
+        html {
+            background-color: black;
+        }
+        h2 {
+            color: #baffdc;
+        }
+        .log-window {
+            color: #58ff90;
+        }
+        .log-window > div {
+            margin-top: 1px;
+            font-size: 14pt;
+        }
+    </style>
+</head>
+<body>
+<div id="container" class="log-window">
+
+</div>
+</body>
+</html>
