@@ -42,3 +42,12 @@ sudo pm2 startup
 
 ## 3. API Usage
 
+By default all default API's with exception of Net API (net_api_plugin) will be exposed to port __8000__, as defined by __default_config.api_port__
+
+Please open this port on your firewall instead of the nodeos http port
+
+Test by pointing your browser to: `http://your-node-address:8000/v1/chain/get_info`
+
+## 4. Remote Admin Panel
+
+Access the control panel at: `http://your-node-address:8001/control`
