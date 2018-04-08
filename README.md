@@ -1,7 +1,7 @@
 # eos-node-governor
 A process manager and api proxy for EOS.IO nodes
 
-## Dependencies
+## 1. Dependencies
 
 ### Node.js
 ```
@@ -14,7 +14,7 @@ sudo apt-get install -y nodejs
 sudo npm install pm2 -g
 ```
 
-## Setup
+## 2. Setup
 
 ```
 git clone https://github.com/igorls/eos-node-governor.git
@@ -37,3 +37,6 @@ pm2 stop ecosystem.config.js
 ```
 sudo pm2 startup
 ```
+
+## 3. API Usage
+
