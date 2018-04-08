@@ -14,6 +14,8 @@ sudo apt-get install -y nodejs
 sudo npm install pm2 -g
 ```
 
+EOS.IO (*nodeos*) is required and expected to be installed in `/home/ubuntu/eos/build/programs/nodeos`, if you installed in a different directory, please set the path to *nodeos* in the `config.js` file before starting.
+
 ## 2. Setup
 
 ```
