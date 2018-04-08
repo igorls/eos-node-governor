@@ -9,7 +9,7 @@ curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-### PM2 (optional, but recommended)
+### PM2
 ```
 sudo npm install pm2 -g
 ```
@@ -51,3 +51,5 @@ Test by pointing your browser to: `http://your-node-address:8000/v1/chain/get_in
 ## 4. Remote Admin Panel
 
 Access the control panel at: `http://your-node-address:8001/control`
+
+Live server logs are available at: `http://your-node-address:8001/logs`
