@@ -7,7 +7,7 @@ default_config = {
     nodeos_http_port: 8005,
     data_path: '/home/ubuntu/.local/share/eosio/nodeos/data',
     config_path: '/home/ubuntu/.local/share/eosio/nodeos/config',
-    log_dir: '/home/ubuntu',
+    log_dir: '/home/ubuntu/eos_logs',
     enable_stale_prod: false
 };
 

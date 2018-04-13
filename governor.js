@@ -26,7 +26,6 @@ function shutdown() {
 }
 
 let child_proc = null;
-const logStream = fs.createWriteStream(conf.log_dir + '/eos.log', {flags: 'a'});
 const nodeos = conf.binary_path + '/nodeos';
 let serverStatus = false;
 let currentInfo = null;
@@ -40,24 +39,32 @@ function backupLogFile() {
 function restartNode() {
     restartCount++;
     console.log('Staring EOS.IO...');
+    if (!fs.existsSync(conf.log_dir)){
+        fs.mkdirSync(conf.log_dir);
+    }
+    const logStream = fs.createWriteStream(conf.log_dir + '/eos.log', {flags: 'w'});
     const args = ['--enable-stale-production', conf.enable_stale_prod, '--data-dir', conf.data_path, '--config-dir', conf.config_path];
     child_proc = spawn(nodeos, args, {detached: true}, (error, stdout, stderr) => {
         if (error) {
             throw error;
         }
     });
+
     child_proc.on('error', (err) => {
         console.log('Failed to start subprocess.');
         console.log(err);
     });
+
     child_proc.stdout.on('data', (data) => {
         console.log(`stdout: ${data}`);
     });
+
     child_proc.stderr.on('data', (data) => {
-        // Emit to socket IO
         io.in('logs').emit('log', data);
     });
+
     child_proc.stderr.pipe(logStream);
+
     child_proc.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
     });
