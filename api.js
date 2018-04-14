@@ -2,8 +2,10 @@ const conf = require('./config.js').default_config;
 const express = require('express');
 const bodyParser = require('body-parser');
 const rp = require('request-promise');
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 process.on('SIGINT', function () {
     process.exit(0);
 });
