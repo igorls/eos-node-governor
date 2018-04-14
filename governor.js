@@ -88,18 +88,40 @@ setInterval(() => {
         });
         resp.on('end', () => {
             currentInfo = JSON.parse(data);
-            serverStatus = parseInt(currentInfo['head_block_num']) > 0;
+            currentHeadBlock = parseInt(currentInfo['head_block_num']);
+            serverStatus = currentHeadBlock > 0;
+            checkIdleChain();
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
         serverStatus = false;
-        if (autoRestart) {
-            backupLogFile();
-            restartNode();
-        }
+        safeRestart();
     });
 }, 5000);
 
+
+
+function checkIdleChain() {
+    if (lastHeadBlock && currentHeadBlock == lastHeadBlock){
+        idleFor += 1;    
+        if (idleFor > 12) { //Restart if a new block is not produced in 60 seconds.
+            safeRestart();
+        }
+    } else {
+        idleFor = 0; 
+        lastHeadBlock = currentHeadBlock;
+    }
+    
+}
+
+// Restart if autoRestart is set to true, should be renamed to something more indicative
+function safeRestart() {
+    if (autoRestart) {
+        backupLogFile();
+        restartNode();
+    }
+}
+    
 app.get('/current', (req, res) => {
     res.json(currentInfo);
 });
