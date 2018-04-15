@@ -35,6 +35,14 @@ To stop use:
 pm2 stop ecosystem.config.js
 ```
 
+To control only the eos-governor process use:
+```
+pm2 stop eos-governor
+pm2 start eos-governor
+pm2 reload eos-governor
+```
+avoid using `pm2 restart ...` since it will corrupt your chain data!
+
 ### Autostart on boot
 ```
 sudo pm2 startup
