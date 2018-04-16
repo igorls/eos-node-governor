@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,500');
+
+.card {
+    box-shadow: 4px 6px 5px 0 rgba(0, 0, 0, 0.34);
+    border: none;
+}
+
+.card-header {
+    box-shadow: 0 1px 0 0 rgba(255,255,255,.12);
+    background-color: transparent;
+}
+
+.form-control:focus {
+    color: #114761;
+    background-color: #fff;
+    border-color: #114761;
+    outline: 0;
+    box-shadow: none;
+}
+
+.font-17 {
+    font-size: 17px;
+}
+
+.font-18 {
+    font-size: 18px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+.font-2rem {
+    font-size: 2.1rem;
+}
+
+.font-17rem {
+    font-size: 1.4rem;
+    padding: 7px 0;
+    font-weight: 500;
+}
+
+.pad-0 {
+    padding-left: 0;
+}
+
+.echart {
+    height: 200px;
+}
+
+.text-faded {
+    color: #606060;
+}
+
+.mono {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+}
+
+.logs-body {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.striped div:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}

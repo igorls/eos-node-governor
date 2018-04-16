@@ -1,0 +1,8 @@
+body {
+    background-image: url("assets/rio4.jpg");
+    background-size: cover;
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+}
