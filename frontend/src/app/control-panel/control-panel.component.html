@@ -1,0 +1,167 @@
+<div class="bg">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-9">
+
+                <a class="navbar-brand d-none d-block mt-1 mb-1 text-center">
+                    <img src="../../assets/bpcontrolpanel2.png" style="width: 100%"/>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-dark btn-block" (click)="start()"
+                                        [disabled]="started">
+                                    <i class="fa fa-play"></i>&nbsp;&nbsp;START
+                                </button>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-danger btn-block mt-2 mt-lg-0"
+                                        (click)="stop()"
+                                        [disabled]="!started || !canStop">
+                                    <i class="fa fa-ban"></i>&nbsp;&nbsp;STOP
+                                </button>
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-info btn-block mt-2 mt-lg-0"
+                                        (click)="reload()"
+                                        [disabled]="reloading">
+                                    <i class="fa fa-refresh"></i>&nbsp;&nbsp;RELOAD
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-2 justify-content-between">
+                            <div class="col-lg-8 ">
+                                <div class="text-success" *ngIf="started"><strong>Node running...</strong></div>
+                                <div class="text-danger" *ngIf="!started"><strong>Node stopped.</strong></div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="text-warning" *ngIf="reloading"><strong>Node reloading...</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-6"></div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center text-faded font-20 mb-1">
+                                        &nbsp;BlOCK STATS
+                                    </div>
+                                    <div class="col-lg-6 text-lg-right font-17 text-center">
+                                        <div>Current</div>
+                                    </div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center">
+                                        <h3 class="mono">{{headBlock}}</h3>
+                                    </div>
+                                    <div class="col-lg-6 text-lg-right font-17 text-center">
+                                        <div>Last irreversible</div>
+                                    </div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center">
+                                        <h3 class="mono">{{irrBlock}}</h3>
+                                    </div>
+                                    <div class="col-lg-6 text-lg-right font-17 text-center">
+                                        <div>Your last produced</div>
+                                    </div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center">
+                                        <h3 class="mono">{{myBlock}}</h3>
+                                    </div>
+
+                                    <div class="col-lg-6 text-lg-right font-17 text-center mt-lg-3">
+                                        <div>Current producer</div>
+                                    </div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center mt-lg-3">
+                                        <h4 class="mono">{{headProd}}</h4>
+                                    </div>
+                                    <div class="col-lg-6 text-lg-right font-17 text-center">
+                                        <div>Your producer</div>
+                                    </div>
+                                    <div class="col-lg-6 pad-0 text-lg-left text-center">
+                                        <h4 class="mono">{{yourName}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12 mt-3 mt-lg-0">
+                                        <div echarts [options]="memory" [merge]="ramvalue" class="echart"></div>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <div class="text-faded font-20">Memory usage</div>
+                                        <div class="font-2rem">{{usedram}}</div>
+                                        <div class="font-18"><span class="text-faded">Total memory</span> {{totalram}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row">
+                                    <div class="col-lg-12 mt-4 mt-lg-0">
+                                        <div echarts [options]="cpu" [merge]="cpuvalue" class="echart"></div>
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <div class="text-faded font-20 mt-3 mt-lg-0">CPU avg load</div>
+                                        <div class="font-17rem">1m: {{percentCpu}}% | 5m: {{cpu5m}}% | 15m:
+                                            {{cpu15m}}%
+                                        </div>
+                                        <div class="font-18">{{totalcores}} <span class="text-faded">Cores</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-2 pb-4">
+            <div class="col-lg-12 col-md-9">
+                <div class="card" id="logsSec">
+                    <div class="card-header">
+                        <div class="row justify-content-between">
+                            <div class="col-lg-4">
+                                Logs
+                            </div>
+                            <div class="col-lg-4" *ngIf="!showLogs">
+                                <button type="button" class="btn btn-outline-dark btn-block" (click)="getLogs()">
+                                    <i class="fa fa-eye"></i>&nbsp;&nbsp;Show Logs
+                                </button>
+                            </div>
+                            <div class="col-lg-6 text-right" *ngIf="showLogs">
+                                <button *ngIf="!logsPaused" type="button" class="btn btn-outline-danger"
+                                        (click)="pauseLogs()">
+                                    <i class="fa fa-pause"></i>&nbsp;&nbsp;Pause
+                                </button>
+                                <button *ngIf="logsPaused" type="button" class="btn btn-outline-success"
+                                        (click)="resumeLogs()">
+                                    <i class="fa fa-play"></i>&nbsp;&nbsp;Resume
+                                </button>
+                                <button type="button" class="btn btn-outline-info" (click)="clearLogs()">
+                                    <i class="fa fa-undo"></i>&nbsp;&nbsp;Clear
+                                </button>
+                                <button type="button" class="btn btn-outline-dark" (click)="hideLogs()">
+                                    <i class="fa fa-eye-slash"></i>&nbsp;&nbsp;Hide Logs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body logs-body" *ngIf="showLogs">
+                        <div class="row striped">
+                            <div class="col-lg-12" *ngFor="let log of logs">
+                                {{log}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

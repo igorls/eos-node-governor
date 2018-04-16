@@ -1,0 +1,50 @@
+<div class="bg">
+  <div class="container">
+
+    <div class="row justify-content-center">
+      <div class="col-lg-5 col-md-9">
+        <a class="navbar-brand d-none d-block mt-1 mb-1 text-center">
+          <img src="../../assets/bpcontrolpanel2.png" style="width: 100%"/>
+        </a>
+        <div class="card">
+          <div class="card-header">
+            Login
+          </div>
+          <div class="card-body">
+
+            <form [formGroup]="loginForm">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="user">Username</label>
+                    <input type="text" class="form-control" id="user" formControlName="user">
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="pass">Password</label>
+                    <input type="password" class="form-control" formControlName="pass" id="pass">
+                  </div>
+                </div>
+                <div class="col-lg-12" *ngIf="alert === 'err' ">
+                  <div class="alert alert-danger" role="alert">
+                    Unauthorized login!
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <button type="submit" (click)="login()"
+                          class="btn btn-dark btn-block">Enter
+                  </button>
+                </div>
+              </div>
+              <!--</div>-->
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
