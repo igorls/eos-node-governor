@@ -4,39 +4,16 @@ const bodyParser = require('body-parser');
 const rp = require('request-promise');
 const cors = require('cors');
 const app = express();
+const proxy = require('http-proxy-middleware');
 
 app.use(cors());
 process.on('SIGINT', function () {
     process.exit(0);
 });
 
-app.get('/', (req, res) => {
-    res.send('eosio api proxy');
-});
+// proxy middleware blocking requests to the net api
+app.use(['/v1/**', '!**/net/**'], proxy({target: 'http://127.0.0.1:' + conf.nodeos_http_port, changeOrigin: true}));
 
-app.all('/v1/*', bodyParser.json(), (req, res) => {
-    // console.log("Method " + req.method);
-    // console.log('Path: ' + req.path);
-    const path = req.path.split('/');
-    if (path[2] !== 'net') {
-        const opts = {
-            uri: 'http://localhost:' + conf.nodeos_http_port + req.path,
-            method: req.method,
-            timeout: 1000,
-        };
-        if (req.method === 'POST') {
-            opts['body'] = req.body;
-            opts['json'] = true;
-        }
-        rp(opts).then((response) => {
-            res.send(response);
-        }).catch((err) => {
-            res.send(err);
-        });
-    } else {
-        res.status(401).send('Access denied!');
-    }
-});
 
 app.listen(conf.api_port, () => {
     console.log('api proxy listening on port ' + conf.api_port);
