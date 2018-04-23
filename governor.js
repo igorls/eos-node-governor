@@ -163,7 +163,7 @@ const nodeos = conf.binary_path + '/nodeos';
 let serverStatus = false;
 let currentInfo = null;
 let restartCount = 0;
-let autoRestart = false;
+let autoRestart = true;
 let resyncChain = false;
 let governorIntervalId = null;
 
